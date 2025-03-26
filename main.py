@@ -37,7 +37,13 @@ def followLine(speed:int, speed_slow:int):
         display.show("D")
         motor_run(Motor.RIGHT, speed_slow)
         motor_run(Motor.LEFT, speed )
-
+    
+    elif line_sensor(LineSensor.L1)==BLACK and line_sensor(LineSensor.M)==BLACK :
+        display.show("A")
+        motor_run(Motor.RIGHT, speed, MOTOR_BACKWARD)
+        utime.sleep_ms(200)
+        motor_run(Motor.LEFT, speed_slow)
+        utime.sleep_ms(150)
     utime.sleep_ms(50)
 
 while True:
