@@ -24,33 +24,33 @@ def followLine(speed:int, speed_slow:int):
     if line_sensor(LineSensor.M)== WHITE:
         # On est sur la bande noire, on continue tout droit.
         display.show(Image.HAPPY)
-        motor_run(Motor.LEFT, speed, MOTOR_FORWARD)
-        motor_run(Motor.RIGHT, speed, MOTOR_FORWARD)
+        motor_run(Motor.LEFT, speed)
+        motor_run(Motor.RIGHT, speed)
 
     elif line_sensor(LineSensor.L1)==WHITE and line_sensor(LineSensor.R1)==BLACK:        
         # On est sorti à gauche, il faut revenir un peu sur la droite.
         display.show("G") 
-        motor_run(Motor.RIGHT, speed, MOTOR_FORWARD)
-        motor_run(Motor.LEFT, speed_slow, MOTOR_FORWARD)
+        motor_run(Motor.RIGHT, speed)
+        motor_run(Motor.LEFT, speed_slow)
 
     elif line_sensor(LineSensor.L1)==BLACK and line_sensor(LineSensor.R1)==WHITE:
         # On est sorti à droite, il faut revenir un peu sur la gauche.
         display.show("D")
-        motor_run(Motor.RIGHT, speed_slow, MOTOR_FORWARD)
-        motor_run(Motor.LEFT, speed, MOTOR_FORWARD)
+        motor_run(Motor.RIGHT, speed_slow)
+        motor_run(Motor.LEFT, speed)
     
     elif line_sensor(LineSensor.L1)==BLACK and line_sensor(LineSensor.M)==BLACK:
         display.show("V")
         motor_run(Motor.RIGHT, speed, MOTOR_BACKWARD)
         utime.sleep_ms(200)
-        motor_run(Motor.LEFT, speed_slow, MOTOR_FORWARD)
+        motor_run(Motor.LEFT, speed_slow)
         utime.sleep_ms(150)
        
     elif line_sensor(LineSensor.R1)==BLACK and line_sensor(LineSensor.M)==BLACK:
         display.show("X")
         motor_run(Motor.LEFT, speed, MOTOR_BACKWARD)
         utime.sleep_ms(200)
-        motor_run(Motor.RIGHT, speed_slow, MOTOR_FORWARD)
+        motor_run(Motor.RIGHT, speed_slow)
         utime.sleep_ms(150)    
 
     utime.sleep_ms(50)
