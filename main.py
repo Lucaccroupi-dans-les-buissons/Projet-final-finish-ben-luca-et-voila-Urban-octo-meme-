@@ -22,7 +22,7 @@ Init = True
 #code pas optimisé mais qui est censé marcher
 def followLine(speed:int, speed_slow:int):
     if line_sensor(LineSensor.M)== WHITE:
-        # On est sur la bande noire, on continue tout droit.
+        # On est sur le noir on continue tout droit.
         display.show(Image.HAPPY)
         motor_run(Motor.LEFT, speed)
         motor_run(Motor.RIGHT, speed)
