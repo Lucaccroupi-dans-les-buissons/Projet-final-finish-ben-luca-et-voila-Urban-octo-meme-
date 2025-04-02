@@ -21,62 +21,75 @@ Init = True
 
 #code pas optimisé mais qui est censé marcher
 def turnRight(speed:int, speed_slow:int):
-    motor_run(Motor.RIGHT, speed, MOTOR_BACKWARD)
-    utime.sleep_ms(200)
-    motor_run(Motor.LEFT, speed_slow)
-    utime.sleep_ms(150)
+    while not line_sensor(LineSensor.L2)==BLACK and not line_sensor(LineSensor.M)== WHITE:
+        motor_run(Motor.RIGHT, speed, MOTOR_BACKWARD)
+        motor_run(Motor.LEFT, speed)
+    motor_stop(Motor.ALL)
     
 def turnLeft(speed:int, speed_slow:int):
     motor_run(Motor.LEFT, speed, MOTOR_BACKWARD)
-    utime.sleep_ms(200)
-    motor_run(Motor.RIGHT, speed_slow)
-    utime.sleep_ms(150)
+    motor_run(Motor.RIGHT, speed)
+    utime.sleep_ms(1000)
     
 def U_turn(speed:int, speed_slow:int):
     motor_run(Motor.LEFT, speed, MOTOR_BACKWARD)
     motor_run(Motor.RIGHT, speed)
-    utime.sleep_ms(200)
+    utime.sleep_ms(2000)
 
 
 def followLine(speed:int, speed_slow:int):
-    if line_sensor(LineSensor.M)== WHITE:
+    if line_sensor(LineSensor.L2)==WHITE and line_sensor(LineSensor.R2)==WHITE and line_sensor(LineSensor.M)== WHITE:
         # On est sur le noir on continue tout droit.
         display.show(Image.HAPPY)
         motor_run(Motor.LEFT, speed)
         motor_run(Motor.RIGHT, speed)
 
-    elif line_sensor(LineSensor.L1)==WHITE and line_sensor(LineSensor.R1)==BLACK:        
+    elif line_sensor(LineSensor.L2)==WHITE and line_sensor(LineSensor.R2)==BLACK and line_sensor(LineSensor.M)== WHITE:        
         # On est sorti à gauche, il faut revenir un peu sur la droite.
         display.show("G") 
         motor_run(Motor.RIGHT, speed)
         motor_run(Motor.LEFT, speed_slow)
 
-    elif line_sensor(LineSensor.L1)==BLACK and line_sensor(LineSensor.R1)==WHITE:
+    elif line_sensor(LineSensor.L2)==BLACK and line_sensor(LineSensor.R2)==WHITE and line_sensor(LineSensor.M)== WHITE:
         # On est sorti à droite, il faut revenir un peu sur la gauche.
         display.show("D")
         motor_run(Motor.RIGHT, speed_slow)
         motor_run(Motor.LEFT, speed)
     
-    elif line_sensor(LineSensor.L1)==BLACK and line_sensor(LineSensor.M)==BLACK:
+    elif line_sensor(LineSensor.L2)==BLACK and line_sensor(LineSensor.R2)==WHITE and line_sensor(LineSensor.M)== BLACK:
         display.show("R")
-        turnRight(speed:int, speed_slow:int)
+        motor_stop(Motor.ALL)
+        sleep(50)
+        turnRight(speed, speed_slow)
        
-    elif line_sensor(LineSensor.R1)==BLACK and line_sensor(LineSensor.M)==BLACK:
+    elif line_sensor(LineSensor.R2)==BLACK and line_sensor(LineSensor.L2)==WHITE and line_sensor(LineSensor.M)== BLACK:
         display.show("L")
-        turnLeft(speed:int, speed_slow:int)   
+        motor_stop(Motor.ALL)
+        sleep(50)
+        turnLeft(speed, speed_slow)
+        
+    elif line_sensor(LineSensor.R2)==BLACK and line_sensor(LineSensor.L2)==BLACK and line_sensor(LineSensor.M)== BLACK:
+        display.show("U")
+        motor_stop(Motor.ALL)
+        sleep(50)
+        U_turn(speed, speed_slow)
 
     utime.sleep_ms(50)
 
-
+def labyrinthe():
+    x = 1
+    return x
 
 # Vitesse maximale des moteurs (min:0, max:255)
 speed:int = 70   #70 de base
 speed_slow:int = 15 #15 de base
 
+led_rgb(rgb(0,0,255))
+
 while True:
     if Init:
         for k in range (3,0,-1):
-           display.show("k")
+           display.show(k)
            utime.sleep_ms(1000)
           
         Init = False
