@@ -20,6 +20,24 @@ MOTOR_BACKWARD = 1
 Init = True
 
 #code pas optimisé mais qui est censé marcher
+def turnRight(speed:int, speed_slow:int):
+    motor_run(Motor.RIGHT, speed, MOTOR_BACKWARD)
+    utime.sleep_ms(200)
+    motor_run(Motor.LEFT, speed_slow)
+    utime.sleep_ms(150)
+    
+def turnLeft(speed:int, speed_slow:int):
+    motor_run(Motor.LEFT, speed, MOTOR_BACKWARD)
+    utime.sleep_ms(200)
+    motor_run(Motor.RIGHT, speed_slow)
+    utime.sleep_ms(150)
+    
+def U_turn(speed:int, speed_slow:int):
+    motor_run(Motor.LEFT, speed, MOTOR_BACKWARD)
+    motor_run(Motor.RIGHT, speed)
+    utime.sleep_ms(200)
+
+
 def followLine(speed:int, speed_slow:int):
     if line_sensor(LineSensor.M)== WHITE:
         # On est sur le noir on continue tout droit.
@@ -40,27 +58,23 @@ def followLine(speed:int, speed_slow:int):
         motor_run(Motor.LEFT, speed)
     
     elif line_sensor(LineSensor.L1)==BLACK and line_sensor(LineSensor.M)==BLACK:
-        display.show("V")
-        motor_run(Motor.RIGHT, speed, MOTOR_BACKWARD)
-        utime.sleep_ms(200)
-        motor_run(Motor.LEFT, speed_slow)
-        utime.sleep_ms(150)
+        display.show("R")
+        turnRight(speed:int, speed_slow:int)
        
     elif line_sensor(LineSensor.R1)==BLACK and line_sensor(LineSensor.M)==BLACK:
-        display.show("X")
-        motor_run(Motor.LEFT, speed, MOTOR_BACKWARD)
-        utime.sleep_ms(200)
-        motor_run(Motor.RIGHT, speed_slow)
-        utime.sleep_ms(150)    
+        display.show("L")
+        turnLeft(speed:int, speed_slow:int)   
 
     utime.sleep_ms(50)
 
+
+
+# Vitesse maximale des moteurs (min:0, max:255)
+speed:int = 70   #70 de base
+speed_slow:int = 15 #15 de base
+
 while True:
     if Init:
-        # Vitesse maximale des moteurs (min:0, max:255)
-        speed:int = 40   #70 de base
-        speed_slow:int = 10 #15 de base
-
         for k in range (3,0,-1):
            display.show("k")
            utime.sleep_ms(1000)
