@@ -21,10 +21,9 @@ Init = True
 
 #code pas optimisé mais qui est censé marcher
 def turnRight(speed:int, speed_slow:int):
-    while not line_sensor(LineSensor.L2)==BLACK and not line_sensor(LineSensor.M)== WHITE:
-        motor_run(Motor.RIGHT, speed, MOTOR_BACKWARD)
-        motor_run(Motor.LEFT, speed)
-    motor_stop(Motor.ALL)
+    motor_run(Motor.RIGHT, speed, MOTOR_BACKWARD)
+    motor_run(Motor.LEFT, speed)
+    utime.sleep_ms(1000)
     
 def turnLeft(speed:int, speed_slow:int):
     motor_run(Motor.LEFT, speed, MOTOR_BACKWARD)
