@@ -1,96 +1,67 @@
 from microbit import*
 from maprincess import *
 import utime
-
+ 
 '''
-   /''''^''''\
-  /  L1 M R1  \
- |             |
- |L2         R2|
-o|.............|o
-
+    /''''^''''\
+   /  L1 M R1  \
+  |             |
+  |L2         R2|
+ o|.............|o
+ 
 '''
 # Constantes
 WHITE = 0
 BLACK = 1
 MOTOR_FORWARD = 0
 MOTOR_BACKWARD = 1
-
+ 
 # Variable globale
 Init = True
+ 
 
-#code pas optimisé mais qui est censé marcher
-def turnRight(speed:int, speed_slow:int):
-    motor_run(Motor.RIGHT, speed, MOTOR_BACKWARD)
-    motor_run(Motor.LEFT, speed)
-    utime.sleep_ms(1000)
-    
-def turnLeft(speed:int, speed_slow:int):
-    motor_run(Motor.LEFT, speed, MOTOR_BACKWARD)
-    motor_run(Motor.RIGHT, speed)
-    utime.sleep_ms(1000)
-    
-def U_turn(speed:int, speed_slow:int):
-    motor_run(Motor.LEFT, speed, MOTOR_BACKWARD)
-    motor_run(Motor.RIGHT, speed)
-    utime.sleep_ms(2000)
+labyrinthe = [
+[23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
+[22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
+[22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
+[23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
+[24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2],
+[25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3],
+[26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4], 
+[27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5],
+[28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6],
+[29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7],
+[30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8],
+[31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9],
+[32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10],
+[33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11],
+[34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12],
+[35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13],
+[36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14]
+]
+i = 15
+j = 2
+position = labyrinthe[i][j]
+direction = 1
+# 1 = droite / 2 = haut / 3 = bas / 4 = gauche
 
-
-def followLine(speed:int, speed_slow:int):
-    if line_sensor(LineSensor.L2)==WHITE and line_sensor(LineSensor.R2)==WHITE and line_sensor(LineSensor.M)== WHITE:
-        # On est sur le noir on continue tout droit.
-        display.show(Image.HAPPY)
-        motor_run(Motor.LEFT, speed)
-        motor_run(Motor.RIGHT, speed)
-
-    elif line_sensor(LineSensor.L2)==WHITE and line_sensor(LineSensor.R2)==BLACK and line_sensor(LineSensor.M)== WHITE:        
-        # On est sorti à gauche, il faut revenir un peu sur la droite.
-        display.show("G") 
-        motor_run(Motor.RIGHT, speed)
-        motor_run(Motor.LEFT, speed_slow)
-
-    elif line_sensor(LineSensor.L2)==BLACK and line_sensor(LineSensor.R2)==WHITE and line_sensor(LineSensor.M)== WHITE:
-        # On est sorti à droite, il faut revenir un peu sur la gauche.
-        display.show("D")
-        motor_run(Motor.RIGHT, speed_slow)
-        motor_run(Motor.LEFT, speed)
-    
-    elif line_sensor(LineSensor.L2)==BLACK and line_sensor(LineSensor.R2)==WHITE and line_sensor(LineSensor.M)== BLACK:
-        display.show("R")
-        motor_stop(Motor.ALL)
-        sleep(50)
-        turnRight(speed, speed_slow)
-       
-    elif line_sensor(LineSensor.R2)==BLACK and line_sensor(LineSensor.L2)==WHITE and line_sensor(LineSensor.M)== BLACK:
-        display.show("L")
-        motor_stop(Motor.ALL)
-        sleep(50)
-        turnLeft(speed, speed_slow)
-        
-    elif line_sensor(LineSensor.R2)==BLACK and line_sensor(LineSensor.L2)==BLACK and line_sensor(LineSensor.M)== BLACK:
-        display.show("U")
-        motor_stop(Motor.ALL)
-        sleep(50)
-        U_turn(speed, speed_slow)
-
-    utime.sleep_ms(50)
-
-def labyrinthe():
-    x = 1
-    return x
-
-# Vitesse maximale des moteurs (min:0, max:255)
-speed:int = 70   #70 de base
-speed_slow:int = 15 #15 de base
-
-led_rgb(rgb(0,0,255))
-
+print(position)
 while True:
-    if Init:
-        for k in range (3,0,-1):
-           display.show(k)
+    led_rgb(rgb(255, 255, 255))
+    print(line_sensor_data(LineSensor.M))
+    sleep(1000)
+    #200+  = blanc
+    # 100 - 200 = ligne
+    #-100 = noir
+    if 100 < line_sensor_data(LineSensor.M) < 200:
+       if direction == 1:
+           position = labyrinthe[i][j + 1]
+           motor_run(Motor.ALL, 30)
            utime.sleep_ms(1000)
-          
-        Init = False
-
-    followLine(speed, speed_slow)
+           motor_stop()
+       elif direction == 2:
+           position = labyrinthe[i - 1][j]
+       elif direction == 3:
+           position = labyrinthe[i + 1][j]
+       elif direction == 4:
+           position = labyrinthe[i][j - 1]
