@@ -20,30 +20,36 @@ Init = True
 def followLine(speed:int, speed_slow:int):
     
     # On teste si les capteurs infrarouge frontaux L1 et R1 détecte la bande noire
-    if line_sensor(LineSensor.M)== WHITE:
+    if line_sensor(LineSensor.R1)== WHITE and line_sensor(LineSensor.R2)== BLACK:
         # On est sur la bande noire, on continue tout droit.
         display.show(Image.HAPPY)
         motor_run(Motor.LEFT, speed)
         motor_run(Motor.RIGHT, speed)
 
-    elif line_sensor(LineSensor.L1)==WHITE and line_sensor(LineSensor.R1)==BLACK:        
+    elif line_sensor(LineSensor.R2) == WHITE and line_sensor(LineSensor.L2) == BLACK:        
         # On est sorti à gauche, il faut revenir un peu sur la droite.
-        display.show("G") 
+        display.show("D") 
+        motor_run(Motor.RIGHT, speed_slow)
+        motor_run(Motor.LEFT, speed)
+
+    elif line_sensor(LineSensor.R1) == BLACK:
+        # On est sorti à droite, il faut revenir un peu sur la gauche.
+        display.show("G")
         motor_run(Motor.RIGHT, speed)
         motor_run(Motor.LEFT, speed_slow)
-
-    elif line_sensor(LineSensor.L1)==BLACK and line_sensor(LineSensor.R1)==WHITE:
-        # On est sorti à droite, il faut revenir un peu sur la gauche.
-        display.show("D")
-        motor_run(Motor.RIGHT, speed_slow)
-        motor_run(Motor.LEFT, speed )
     
-    elif line_sensor(LineSensor.L1)==BLACK and line_sensor(LineSensor.M)==BLACK :
-        display.show("A")
-        motor_run(Motor.RIGHT, speed, MOTOR_BACKWARD)
+    elif line_sensor(LineSensor.R2)== BLACK and line_sensor(LineSensor.M) == BLACK :
+        display.show("L")
+        motor_run(Motor.RIGHT, speed)
+        motor_run(Motor.LEFT, speed, MOTOR_BACKWARD)
         utime.sleep_ms(200)
-        motor_run(Motor.LEFT, speed_slow)
-        utime.sleep_ms(150)
+        
+    elif line_sensor(LineSensor.R2)== WHITE and line_sensor(LineSensor.L2) == WHITE :
+        display.show("R")
+        motor_run(Motor.RIGHT, speed, MOTOR_BACKWARD)
+        motor_run(Motor.LEFT, speed)
+        utime.sleep_ms(200)
+        
     utime.sleep_ms(50)
 
 while True:
@@ -51,7 +57,7 @@ while True:
         # Vitesse maximale des moteurs (min:0, max:255)
         speed:int = 70   #70
         speed_slow:int = 15 #15
-        led_rgb(rbg(255,255,255)
+        led_rgb(rbg(255,255,255))
         display.show("1")
         utime.sleep_ms(3000)
         Init = False
