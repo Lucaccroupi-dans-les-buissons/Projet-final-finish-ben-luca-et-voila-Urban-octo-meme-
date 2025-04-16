@@ -51,7 +51,7 @@ while True:
         # Vitesse maximale des moteurs (min:0, max:255)
         speed:int = 70   #70
         speed_slow:int = 15 #15
-
+        led_rgb(rbg(255,255,255)
         display.show("1")
         utime.sleep_ms(3000)
         Init = False
