@@ -1,5 +1,6 @@
 from microbit import*
 from maprincess import *
+from protocole import *
 import utime
 
 '''
@@ -14,6 +15,10 @@ o|.............|o
 WHITE = 0
 BLACK = 1
 MOTOR_BACKWARD = 1
+
+#radio
+userId = 0
+destId = 1
 
 # Variable globale
 Init = True
@@ -82,4 +87,4 @@ while True:
             
     motor_stop()
     led_rgb(rgb(0,255,0))
-    
+    send_msg(1,[1],userId, destId)
