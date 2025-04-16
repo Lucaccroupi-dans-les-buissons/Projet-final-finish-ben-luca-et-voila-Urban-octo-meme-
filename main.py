@@ -77,7 +77,7 @@ while True:
         
     while true:
         followLine(speed, speed_slow)
-        if ultrasonic() < 8:
+        if 3 < ultrasonic() < 8:
             true = False
             
     motor_stop()
