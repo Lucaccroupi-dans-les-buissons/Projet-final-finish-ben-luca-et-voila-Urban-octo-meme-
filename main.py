@@ -62,11 +62,16 @@ while True:
     if Init:
         # Vitesse maximale des moteurs (min:0, max:255)
         speed:int = 70   #70
-        speed_slow:int = 35 #15
+        speed_slow:int = 15 #15
         led_rgb(rgb(255,255,255))
         for k in range(3,0,-1):
             display.show(k)
             utime.sleep_ms(500)
         Init = False
-
-    followLine(speed, speed_slow)
+    while true:
+        followLine(speed, speed_slow)
+        if ultrasonic() < 8:
+            true = False
+    motor_stop()
+    led_rgb(rgb(0,255,0))
+    
