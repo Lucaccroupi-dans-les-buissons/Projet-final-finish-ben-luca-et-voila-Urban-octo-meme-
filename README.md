@@ -29,7 +29,15 @@ Après des mois de recherches et développement, grâce au soutien précieux de 
 
 voici l'inspiration pour la partie du code qu'on a pas encore écrite: 
 
-![image](https://github.com/user-attachments/assets/9ce05686-d29e-4d13-82c8-a8fb50683a22
+![image](https://github.com/user-attachments/assets/9ce05686-d29e-4d13-82c8-a8fb50683a22)
+
+
+Merci à tous nos soutiens financiers et moraux pendant cette aventure, qui nous ont préservé du burn-out
+
+Shout-out to Mister Grincheux and Mister Balasilico 
+
+Ciao. 
+![image](https://github.com/user-attachments/assets/419b2522-aef1-4804-ad3c-d45d70bf23dd)
 
 
 
