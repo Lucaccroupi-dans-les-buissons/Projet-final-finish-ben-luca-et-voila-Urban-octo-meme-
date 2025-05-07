@@ -20,3 +20,16 @@ Cela permettra à l'armée de vampire de Adrien Jungbadoor de prendre le contrô
 
 Bienvenue, à Super-Maqueen-World !
 
+![image](https://github.com/user-attachments/assets/fdfde5ab-2d0b-45a5-b56f-caa20ad11b37)
+
+![image](https://github.com/user-attachments/assets/41051685-5585-4648-abc1-d05e5e69679c)
+
+
+Après des mois de recherches et développement, grâce au soutien précieux de Molex qui nous a fourni les quelques millions de Neural Processing Unit et a permi un softcore harmonieux, nous présentons notre projet d'intriquation quantique de la matière Miicrob...it:: 
+
+voici l'inspiration pour la partie du code qu'on a pas encore écrite: 
+![image](https://github.com/user-attachments/assets/9ce05686-d29e-4d13-82c8-a8fb50683a22
+
+
+
+
