@@ -28,6 +28,7 @@ Bienvenue, à Super-Maqueen-World !
 Après des mois de recherches et développement, grâce au soutien précieux de Molex qui nous a fourni les quelques millions de Neural Processing Unit et a permi un softcore harmonieux, nous présentons notre projet d'intriquation quantique de la matière Miicrob...it:: 
 
 voici l'inspiration pour la partie du code qu'on a pas encore écrite: 
+
 ![image](https://github.com/user-attachments/assets/9ce05686-d29e-4d13-82c8-a8fb50683a22
 
 
