@@ -9,7 +9,7 @@ import utime
  |             |
  |L2         R2|
 o|.............|o
-
++9
 '''
 # Constantes
 WHITE = 0
@@ -88,3 +88,4 @@ while True:
     motor_stop()
     led_rgb(rgb(0,255,0))
     send_msg(1,[1],userId, destId)
+    

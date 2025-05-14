@@ -5,15 +5,9 @@ Version : 1.4
 Date : 03.03.25
 '''
 
-encryption = False
-
 #### Libraries ####
 from microbit import *
 import radio
-
-if encryption:
-    import random
-    import aes
 
 #### Variables globales ####
 seqNum = 0
@@ -24,14 +18,6 @@ ackMsgId = 255
 #### Start radio module ####
 radio.config(channel=7, address=50)
 radio.on()
-
-#### Init AES ####
-if encryption:
-    key    = bytes([156, 110, 239, 52, 206, 138, 164, 35, 3, 76, 3, 60, 84, 199, 63, 253]) # Generate yours with bytes([ random.getrandbits(8) for _ in range(16)])
-    iv     = bytes([ 0 for _ in range(16)])
-    cipher = aes.AES(key)
-
-
 
 #### Classe Message ####
 class Message:
@@ -100,10 +86,7 @@ def msg_to_trame(rawMsg : Message):
     l = [rawMsg.dest, rawMsg.exped, rawMsg.seqNum, rawMsg.msgId] + rawMsg.payload
     rawMsg.crc = sum(l)%256
     trame = l + [rawMsg.crc]
-    
-    if encryption:
-        trame = cipher.encrypt_cfb(trame, iv)
-        
+
     return int_to_bytes(trame)
 
 
@@ -121,9 +104,6 @@ def trame_to_msg(trame : bytes, userId :int):
     '''
     trame = bytes_to_int(trame)
     
-    if encryption:
-        trame = bytes_to_int(cipher.decrypt_cfb(trame, iv))
-        
     msgObj = Message(trame[0], trame[1], trame[2], trame[3], trame[4:-1], trame[-1])
     if msgObj.crc == sum(trame[:-1])%256:
         if msgObj.dest == userId : 
@@ -216,29 +196,3 @@ def receive_msg(userId:int):
         if msgRecu and msgRecu.msgId != ackMsgId:
             ack_msg(msgRecu)
             return msgRecu
-
-
-if __name__ == '__main__':
-    import music
-    
-    userId = 1
-
-    while True:
-        # Messages à envoyer
-        destId = 0
-        if button_a.was_pressed():
-            print(send_msg(1,[60],userId, destId))
-        elif button_b.was_pressed():
-            send_msg(1,[120],userId, destId)
-            
-
-                
-        # Reception des messages
-        m = receive_msg(userId)
-        if m:
-            print(m.msgStr())
-        if m and m.msgId==1:
-            music.pitch(m.payload[0]*10, duration=100, pin=pin0)
-        elif m and m.msgId==2:
-            display.show(Image.SQUARE)
-    
