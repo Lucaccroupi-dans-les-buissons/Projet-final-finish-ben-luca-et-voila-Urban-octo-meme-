@@ -38,6 +38,7 @@ Merci à tous nos soutiens financiers et moraux pendant cette aventure, qui nous
 Shout-out to Mister Grincheux and Mister Balasilico 
 
 Ciao. 
+
 ![image](https://github.com/user-attachments/assets/419b2522-aef1-4804-ad3c-d45d70bf23dd)
 
 
