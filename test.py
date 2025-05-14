@@ -46,6 +46,7 @@ direction = 1
 # 1 = droite / 2 = haut / 3 = bas / 4 = gauche
 # départ = 33 du bas
 print(position)
+speed = 70
 while True:
     led_rgb(rgb(255, 255, 255))
     print(line_sensor_data(LineSensor.M))
@@ -55,51 +56,61 @@ while True:
     #-100 = noir
     if 100 < line_sensor_data(LineSensor.M) < 200:
        if direction == 1:
-           if position < labyrinthe[i][j + 1]:
-               motor_run(Motor.ALL, 30)
-               utime.sleep_ms(1000)
-               motor_stop()
-               j = j + 1
-               position = labyrinthe[i][j]
+            if position < labyrinthe[i][j + 1]:
+                motor_run(Motor.ALL, 30)
+                utime.sleep_ms(1000)
+                motor_stop()
+                j = j + 1
+                position = labyrinthe[i][j]
             else:
                 utime.sleep_ms(500)
                 motor_run(Motor.RIGHT, speed, MOTOR_BACKWARD)
                 motor_run(Motor.LEFT, speed)
                 utime.sleep_ms(500)
+                motor_stop()
                 direction = 2
        elif direction == 2:
-           if position < labyrinthe[i - 1][j]:
-               motor_run(Motor.ALL, 30)
-               utime.sleep_ms(1000)
-               motor_stop()
-               i = i - 1
-               position = labyrinthe[i][j]
+            if position < labyrinthe[i - 1][j]:
+                motor_run(Motor.ALL, 30)
+                utime.sleep_ms(1000)
+                motor_stop()
+                i = i - 1
+                position = labyrinthe[i][j]
             else:
                 utime.sleep_ms(500)
                 motor_run(Motor.RIGHT, speed, MOTOR_BACKWARD)
                 motor_run(Motor.LEFT, speed)
                 utime.sleep_ms(500)
+                motor_stop()
                 direction = 4
        elif direction == 3:
-           if position < labyrinthe[i + 1][j]:
-               motor_run(Motor.ALL, 30)
-               utime.sleep_ms(1000)
-               motor_stop()
-               i = i + 1
-               position = labyrinthe[i][j]
+            if position < labyrinthe[i + 1][j]:
+                motor_run(Motor.ALL, 30)
+                utime.sleep_ms(1000)
+                motor_stop()
+                i = i + 1
+                position = labyrinthe[i][j]
             else:
                 utime.sleep_ms(500)
                 motor_run(Motor.RIGHT, speed, MOTOR_BACKWARD)
                 motor_run(Motor.LEFT, speed)
                 utime.sleep_ms(500)
-                direction = 3
+                motor_stop()
+                direction = 1
        elif direction == 4:
-           if position < labyrinthe[i][j - 1]:
-               motor_run(Motor.ALL, 30)
-               utime.sleep_ms(1000)
-               motor_stop()
-               j = j - 1
-               position = labyrinthe[i][j]
+            if position < labyrinthe[i][j - 1]:
+                motor_run(Motor.ALL, 30)
+                utime.sleep_ms(1000)
+                motor_stop()
+                j = j - 1
+                position = labyrinthe[i][j]
+            else:
+                utime.sleep_ms(500)
+                motor_run(Motor.RIGHT, speed, MOTOR_BACKWARD)
+                motor_run(Motor.LEFT, speed)
+                utime.sleep_ms(500)
+                motor_stop()
+                direction = 3
            
     elif line_sensor(LineSensor.M) == BLACK:
         if direction == 1:
